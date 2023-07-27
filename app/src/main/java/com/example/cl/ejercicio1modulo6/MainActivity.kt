@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 /*
-* [] Fragmento para agregar
+* [x] Fragmento para agregar
 
 * * [] crear Interfaz
 * * [] Room
