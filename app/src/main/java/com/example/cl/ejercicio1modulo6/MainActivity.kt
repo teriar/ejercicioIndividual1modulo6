@@ -6,11 +6,12 @@ import android.os.Bundle
 /*
 * [x] Fragmento para agregar
 
-* * [] crear Interfaz
+* * [x] crear Interfaz
 * * [] Room
-*   [] Dao
-*   [] DB
-*  [] Entity
+*    [x] Entity
+*    [x] Dao
+*    [] DB
+*
 ** [] fragmento para listar
 * [] RecyclerView
 * [x] Navigation
