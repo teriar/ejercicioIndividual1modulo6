@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import com.example.cl.ejercicio1modulo6.databinding.FragmentAgregarBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,7 +24,7 @@ private const val ARG_PARAM2 = "param2"
 class AgregarFragment : Fragment() {
 
   lateinit var  binding : FragmentAgregarBinding
-  lateinit var repositorio: Repositorio
+  private val tareaViewModel: TareaVM by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class AgregarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAgregarBinding.inflate(layoutInflater,container,false)
-        initRepositorio()
+
         // Inflate the layout for this fragment
 
         initListener()
@@ -44,10 +45,7 @@ class AgregarFragment : Fragment() {
         return binding.root
     }
 
-    private fun initRepositorio() {
-        val dao = tareaBaseDatos.getDatabase(requireContext()).getTareaDao()
-       repositorio = Repositorio(dao)
-    }
+
 
     private fun initListener() {
         binding.btnAgregarTarea.setOnClickListener{
@@ -61,18 +59,20 @@ class AgregarFragment : Fragment() {
     private fun guardarTarea(texto:String) {
 
         val task = Tarea(texto)
-        GlobalScope.launch { repositorio.insertTask(task) }
+        tareaViewModel.insertarTareas(task)
 
     }
     private fun loadTasks(){
-        val dao = tareaBaseDatos.getDatabase(requireContext()).getTareaDao()
 
-            val tasks = dao.getTareas().observe(requireActivity()){
+        tareaViewModel.obtenerTareas().observe(viewLifecycleOwner){
+            val tasksAsText = it.joinToString("\n") { it.nombre }
 
-                val tasksAsText = it.joinToString("\n") { it.nombre }
+            binding.txtTarea.text = tasksAsText
+        }
 
-                binding.txtTarea.text = tasksAsText
-            }
+
+
+
 
 
 
