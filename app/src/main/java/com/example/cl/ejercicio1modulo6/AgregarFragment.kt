@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import com.example.cl.ejercicio1modulo6.databinding.FragmentAgregarBinding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -22,6 +24,7 @@ private const val ARG_PARAM2 = "param2"
 class AgregarFragment : Fragment() {
 
   lateinit var  binding : FragmentAgregarBinding
+  private val tareaViewModel: TareaVM by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +37,7 @@ class AgregarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAgregarBinding.inflate(layoutInflater,container,false)
+
         // Inflate the layout for this fragment
 
         initListener()
@@ -41,27 +45,36 @@ class AgregarFragment : Fragment() {
         return binding.root
     }
 
+
+
     private fun initListener() {
         binding.btnAgregarTarea.setOnClickListener{
            val text =  binding.inputTarea.text.toString()
             guardarTarea(text)
+            Toast.makeText(requireContext(),"Se a agregado tarea", Toast.LENGTH_SHORT).show()
+
         }
     }
 
     private fun guardarTarea(texto:String) {
-        val dao = tareaBaseDatos.getDatabase(requireContext()).getTareaDao()
+
         val task = Tarea(texto)
-        GlobalScope.launch { dao.insertarTarea(task) }
+        tareaViewModel.insertarTareas(task)
 
     }
     private fun loadTasks(){
-        val dao = tareaBaseDatos.getDatabase(requireContext()).getTareaDao()
-        GlobalScope.launch {
-            val tasks = dao.getTareas()
-            val tasksAsText = tasks.joinToString("\n") { it.nombre }
+
+        tareaViewModel.obtenerTareas().observe(viewLifecycleOwner){
+            val tasksAsText = it.joinToString("\n") { it.nombre }
 
             binding.txtTarea.text = tasksAsText
         }
+
+
+
+
+
+
 
     }
 

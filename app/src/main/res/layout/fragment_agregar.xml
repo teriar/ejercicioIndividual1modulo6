@@ -26,23 +26,22 @@
         android:id="@+id/btnAgregarTarea"
         android:layout_width="162dp"
         android:layout_height="61dp"
-        android:layout_marginTop="428dp"
+        android:layout_marginTop="492dp"
         android:text="Agregar Tarea"
         app:layout_constraintEnd_toEndOf="@+id/inputTarea"
+        app:layout_constraintHorizontal_bias="0.577"
         app:layout_constraintStart_toStartOf="@+id/inputTarea"
         app:layout_constraintTop_toBottomOf="@+id/inputTarea" />
 
     <TextView
         android:id="@+id/txtTarea"
-        android:layout_width="196dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="144dp"
+        android:layout_width="340dp"
+        android:layout_height="448dp"
+        android:layout_marginBottom="20dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/btnAgregarTarea"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputTarea"
-        app:layout_constraintVertical_bias="0.145" />
+        app:layout_constraintHorizontal_bias="0.647"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
